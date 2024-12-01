@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class DataHandler {
@@ -47,5 +48,32 @@ public class DataHandler {
             difference += Math.abs(firstList.get(i)- secondList.get(i));
         }
         return difference;
+    }
+
+    public static HashMap<Integer, Integer> amountsOfNumber(ArrayList<Integer> list) {
+        HashMap<Integer, Integer> numberAmounts = new HashMap<>();
+        for(int i: list) {
+            int amount = 0;
+            for(int number: list) {
+                if(number == i){
+                    amount++;
+                }
+            }
+            if(amount > 0) {
+                numberAmounts.put(i, amount);
+            }
+        }
+        return numberAmounts;
+    }
+
+    public static int calculateSimilarity(HashMap<Integer, Integer> firstNumberAmounts, HashMap<Integer, Integer> secondNumberAmounts) {
+        int similarityScore = 0;
+        for(int i: firstNumberAmounts.keySet()) {
+            if(firstNumberAmounts.containsKey(i) && secondNumberAmounts.containsKey(i)) {
+                similarityScore += i * firstNumberAmounts.get(i) * secondNumberAmounts.get(i);
+            }
+        }
+
+        return similarityScore;
     }
 }
