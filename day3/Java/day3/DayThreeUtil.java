@@ -1,10 +1,41 @@
 package day3;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DayThreeUtil {
+    static boolean findDo = false;
+
+    public static String lineModifier(String line) {
+        StringBuilder newLine = new StringBuilder();
+        int firstCharacter = 0;
+
+        String regex = "do\\(\\)|don't\\(\\)";
+
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcher = pattern.matcher(line);
+
+        while(matcher.find()){
+            if(Objects.equals(matcher.group(), "don't()") && !findDo) {
+                newLine.append(line, firstCharacter, matcher.end());
+                firstCharacter = matcher.end();
+                findDo = true;
+            }
+            if(Objects.equals(matcher.group(), "do()") && findDo) {
+                firstCharacter = matcher.end();
+                findDo = false;
+            }
+        }
+
+        if(!findDo) {
+            newLine.append(line, firstCharacter, line.length());
+        }
+
+        return String.valueOf(newLine);
+    }
 
     public static ArrayList<Integer> findMul(String line){
         ArrayList<Integer> numbers = new ArrayList<>();
