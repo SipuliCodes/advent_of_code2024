@@ -69,4 +69,41 @@ public class DayFourUtil {
         }
         return amount;
     }
+
+    public static int findMASAmount(ArrayList<String> data) {
+        int amount = 0;
+        for(int i = 1; i < data.size() - 1; i++) {
+            String regex = "A";
+
+            Pattern pattern = Pattern.compile(regex);
+
+            Matcher matcher = pattern.matcher(data.get(i));
+
+            while(matcher.find()){
+                boolean bottomLeftS = false;
+                boolean bottomRightS = false;
+                if (matcher.start() > 0 && matcher.end() < data.get(i).length()) {
+                    if ((data.get(i - 1).charAt(matcher.start() - 1) == 'S' ||
+                            data.get(i - 1).charAt(matcher.start() - 1) == 'M')) {
+                        bottomRightS = data.get(i - 1).charAt(matcher.start() - 1) == 'M';
+                        if ((data.get(i - 1).charAt(matcher.start() + 1) == 'S' ||
+                                data.get(i - 1).charAt(matcher.start() + 1) == 'M')) {
+                            bottomLeftS = data.get(i - 1).charAt(matcher.start() + 1) == 'M';
+                            if ((data.get(i + 1).charAt(matcher.start() + 1) == 'S' && bottomRightS) ||
+                                    (data.get(i + 1).charAt(matcher.start() + 1) == 'M' && !bottomRightS)) {
+
+                                if ((data.get(i + 1).charAt(matcher.start() - 1) == 'S' && bottomLeftS) ||
+                                        (data.get(i + 1).charAt(matcher.start() - 1) == 'M' && !bottomLeftS)) {
+                                    System.out.println("y: "+ i + "x: " + matcher.start());
+                                        amount++;
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        return amount;
+    }
 }
