@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DataHandlerUtil {
     public static ArrayList<String> readFile(String path) {
@@ -33,5 +35,21 @@ public class DataHandlerUtil {
             }
         }
         return intList;
+    }
+
+    public static Integer[] findSymbolCoordinates(ArrayList<String> list, String symbol) {
+        Pattern pattern = Pattern.compile(Pattern.quote(symbol));
+
+        Integer[] coordinates = {0, 0};
+
+        for(int i = 0; i < list.size(); i++) {
+            Matcher matcher = pattern.matcher(list.get(i));
+            if(matcher.find()){
+                coordinates[0] = matcher.start();
+                coordinates[1] = i;
+                break;
+            }
+        }
+        return coordinates;
     }
 }
