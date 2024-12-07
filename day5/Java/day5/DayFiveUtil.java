@@ -36,6 +36,51 @@ public class DayFiveUtil {
         return correctUpdates;
     }
 
+    public static ArrayList<String> returnFaultyUpdates(String rule, List<String> changes) {
+        ArrayList<String> correctUpdates = new ArrayList<>();
+
+        outerLoop:
+        for(var line: changes) {
+            String[] numbers = DataHandlerUtil.lineSplitter(line,",");
+            for(int i = 0; i < numbers.length; i++){
+                for(int j = i + 1; j < numbers.length; j++) {
+                    String change = numbers[j] + "|" + numbers[i];
+                    if((rule.contains(change))) {
+                        correctUpdates.add(line);
+                        continue outerLoop;
+                    }
+                }
+            }
+        }
+        return correctUpdates;
+    }
+
+    public static ArrayList<String> fixFaultyUpdates(String rule, ArrayList<String> faultyUpdates) {
+        ArrayList<String> correctUpdates = new ArrayList<>();
+
+        for(var line: faultyUpdates) {
+            String[] numbers = DataHandlerUtil.lineSplitter(line,",");
+            for(int i = 0; i < numbers.length; i++){
+                for(int j = i + 1; j < numbers.length; j++) {
+                    String change = numbers[j] + "|" + numbers[i];
+                    if((rule.contains(change))) {
+                        String temp = numbers[i];
+                        numbers[i] = numbers[j];
+                        numbers[j] = temp;
+                    }
+                }
+            }
+            StringBuilder fixed = new StringBuilder();
+            for(var number: numbers) {
+                fixed.append(number);
+                fixed.append(",");
+            }
+            fixed.delete(fixed.length(), fixed.length() + 1);
+            correctUpdates.add(String.valueOf(fixed));
+        }
+        return correctUpdates;
+    }
+
     public static int calculateSumOfMiddleNumbers(ArrayList<String> correctUpdates) {
         int sum = 0;
         for(var line: correctUpdates) {
