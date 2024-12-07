@@ -2,6 +2,7 @@ package day7;
 
 import utils.DataHandlerUtil;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class DaySevenUtil {
@@ -21,6 +22,8 @@ public class DaySevenUtil {
         generateCombinationsHelper(current + "+", n, result);
 
         generateCombinationsHelper(current + "*", n, result);
+
+        generateCombinationsHelper(current + "|", n, result);
     }
     private static boolean isEqual(long answer, ArrayList<Long> numbers, String operations) {
         long sum = numbers.getFirst();
@@ -30,6 +33,8 @@ public class DaySevenUtil {
                 sum *= numbers.get(i);
             } else if (operation == '+') {
                 sum += numbers.get(i);
+            } else if (operation == '|') {
+                sum = Long.parseLong(sum + String.valueOf(numbers.get(i)));
             }
         }
         return sum == answer;
@@ -49,7 +54,6 @@ public class DaySevenUtil {
             for(var operation: operations) {
                 if(isEqual(answer, numbers, operation)) {
                     sum += answer;
-                    System.out.println();
                     break;
                 }
             }
