@@ -34,16 +34,29 @@ public class DayEightUtil {
                     Point secondPoint = coordinates.get(j);
                     int xDifference = (int) (secondPoint.getX() - firstPoint.getX());
                     int yDifference = (int) (secondPoint.getY() - firstPoint.getY());
-                    int firstAntinodeX = (int) (firstPoint.getX() - xDifference);
-                    int firstAntinodeY = (int) (firstPoint.getY() - yDifference);
-                    int secondAntinodeX = (int) (secondPoint.getX() + xDifference);
-                    int secondAntinodeY = (int) (secondPoint.getY() + yDifference);
-                    if(firstAntinodeX >= 0 && firstAntinodeX < width && firstAntinodeY >= 0 && firstAntinodeY < height ) {
-                        unique.add(firstAntinodeX + "," + firstAntinodeY);
-                    }
-                    if(secondAntinodeX >= 0 && secondAntinodeX < width && secondAntinodeY >= 0 && secondAntinodeY < height ) {
-                        unique.add(secondAntinodeX + "," + secondAntinodeY);
-                    }
+                        int k = 0;
+                        while(true) {
+                            int firstAntinodeX = (int) (firstPoint.getX() - k * xDifference);
+                            int firstAntinodeY = (int) (firstPoint.getY() - k * yDifference);
+                            if(firstAntinodeX >= 0 && firstAntinodeX < width && firstAntinodeY >= 0 && firstAntinodeY < height ) {
+                                unique.add(firstAntinodeX + "," + firstAntinodeY);
+                            } else {
+                                break;
+                            }
+                            k++;
+                        }
+
+                        k = 0;
+                        while(true) {
+                            int secondAntinodeX = (int) (secondPoint.getX() + k * xDifference);
+                            int secondAntinodeY = (int) (secondPoint.getY() + k * yDifference);
+                            if(secondAntinodeX >= 0 && secondAntinodeX < width && secondAntinodeY >= 0 && secondAntinodeY < height ) {
+                                unique.add(secondAntinodeX + "," + secondAntinodeY);
+                            } else {
+                                break;
+                            }
+                            k++;
+                        }
                 }
             }
         }
