@@ -1,0 +1,13 @@
+package day12;
+
+import utils.DataHandlerUtil;
+
+import java.util.ArrayList;
+
+public class Puzzle1 {
+    public static void main(String[] args) {
+        ArrayList<String> data = DataHandlerUtil.readFile("./day12/data.txt");
+        int price = DayTwelveUtil.calculatePrice(data);
+        System.out.println("Answer is " + price);
+    }
+}
